@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+  <title>EShop application</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">EShop</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" th:href=@{/products}">Products</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/brands}">Brands</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Categories</a>
+      </li>
+      <li sec:authorize="hasAnyRole('ADMIN','SUPERADMIN')" class="nav-item active">
+        <a class="nav-link" th:href="@{/users}">Users</a>
+      </li>
+    </ul>
+    <form sec:authorize="isAuthenticated()"class="form-inline mu-2 my-lg-0"
+          th:action="@{/logout}" method = "post">
+      <button class="btn btn-outline-success my-2 my-sm-0">Logout</button>
+    </form>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row py-2">
+    <div class="col-12">
+      <a class="btn btn-primary" th:href="@{categories/form}">Add Category</a>
+    </div>
+
+    <div class="col-12">
+      <table class="table table-bordered my-2">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Title</th>
+          <th sec:authorize="hasAnyRole('MANAGER', 'ADMIN', 'SUPERADMIN')" scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories.content}">
+          <th scope="row" th:text="${category.id}"></th>
+          <td th:text="${category.title}">Title</td>
+          <td sec:authorize="hasAnyRole('MANAGER', 'ADMIN')">
+            <a class="btn btn-success" th:href="@{/categories/edit/{id}(id = ${category.id})}"><i class="fas fa-edit"></i></a>
+            <a class="btn btn-danger" th:href="@{/categories/edit/delete/{id}(id = ${category.id})}"><i class="far fa-trash-alt"></i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-12">
+    <nav aria-label="...">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link"
+             th:if="${categories.hasPrevious()}"
+             th:href="@{categories(page=${categories.previousOrFirstPageable().getPageNumber() + 1},
+                       size=${categories.size})}" tabindex="-1">Previous</a>
+        </li>
+        <li th:each="num: ${#numbers.sequence(1, categories.totalPages)}"
+            class="page-item" th:classappend="${num == categories.number + 1} ? 'active'">
+          <a class="page-link" th:text = "${num}"
+             th:href="@{categories(page=${num}, size=${categories.size})}"></a>
+        </li>
+        <li class="page-item">
+          <a class="page-link"
+             th:if="${categories.hasNext()}"
+             th:href="@{categories(page=${categories.nextOrLastPageable().getPageNumber() + 1},
+                       size=${categories.size})}">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
