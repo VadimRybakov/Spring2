@@ -10,10 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "brands")
@@ -31,4 +33,9 @@ public class Brand implements Serializable {
       cascade = CascadeType.ALL)
   private List<Product> products;
 
+  public Brand(Integer id, String title, List<Product> products) {
+    this.id = id;
+    this.title = title;
+    this.products = products;
+  }
 }

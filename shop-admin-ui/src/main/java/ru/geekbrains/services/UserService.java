@@ -9,8 +9,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.dto.UserDto;
+import ru.geekbrains.exceptions.NotFoundException;
 import ru.geekbrains.model.Role;
 
 import ru.geekbrains.model.User;
@@ -20,10 +23,17 @@ import ru.geekbrains.repo.UserRepository;
 public class UserService implements UserDetailsService {
 
   private UserRepository userRepository;
+  private PasswordEncoder passwordEncoder;
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
     this.userRepository = userRepository;
+  }
+
+  @Autowired
+  public void setPasswordEncoder(
+      PasswordEncoder passwordEncoder) {
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Transactional
@@ -46,8 +56,9 @@ public class UserService implements UserDetailsService {
     return userRepository.findAll();
   }
 
-  public User findById(int id) {
-    return userRepository.findById(id).orElse(new User());
+  public UserDto findById(int id) {
+    return userRepository.findById(id).map(UserDto::new).orElseThrow(
+        NotFoundException::new);
   }
 
   public User findByName(String name) {
@@ -66,7 +77,13 @@ public class UserService implements UserDetailsService {
   }
 
   @Transactional
-  public void save(User user) {
+  public void save(UserDto userDto) {
+    User user = new User();
+    user.setId(userDto.getId());
+    user.setName(userDto.getUsername());
+    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+    user.setEmail(userDto.getEmail());
+    user.setRoles(userDto.getRoles());
     userRepository.save(user);
   }
 }

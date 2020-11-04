@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.geekbrains.dto.CategoryDto;
 import ru.geekbrains.model.Category;
 import ru.geekbrains.services.CategoryService;
 
@@ -61,7 +62,7 @@ public class CategoryController {
 
   @GetMapping("/edit/{id}")
   public String editBrand(@PathVariable("id") int id, Model model) {
-    Category category = categoryService.findById(id);
+    CategoryDto category = categoryService.findById(id);
     model.addAttribute("category", category);
     return "categories_form";
   }
@@ -74,14 +75,13 @@ public class CategoryController {
 
   @GetMapping("/edit/delete/{id}")
   public String deleteBrand(@PathVariable("id") int id) {
-    Category category = categoryService.findById(id);
-    categoryService.delete(category);
+    categoryService.deleteById(id);
     return "redirect:/categories";
   }
 
   @PostMapping("/edit/update")
-  public String updateBrand(Category category) {
-    categoryService.update(category);
+  public String updateBrand(CategoryDto categoryDto) {
+    categoryService.update(categoryDto);
     return "redirect:/categories";
   }
 }

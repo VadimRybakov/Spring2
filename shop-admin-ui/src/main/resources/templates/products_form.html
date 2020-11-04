@@ -10,10 +10,11 @@
 <div class="container">
   <div class="row py-2">
     <div class="col-12">
-      <form th:action="@{/products/edit/update}" method="post" th:object="${product}">
+      <form th:action="@{/products/edit/update}" method="post" th:object="${product}"
+            enctype="multipart/form-data">
         <div class="form-group">
           <label>Id</label>
-          <input type="number" class="form-control" th:field="*{id}" placeholder="Enter id">
+          <input th:type="hidden" th:field="*{id}">
           <label>Title</label>
           <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title">
           <label>Cost</label>
@@ -26,9 +27,26 @@
           <select th:field="*{category}" class="form-control">
             <option th:each="c : ${categories}" th:text="${c.title}" th:value="${c.id}"/>
           </select>
+          <label>Product image</label>
+          <input type="file" class="form-control" placeholder="upload picture"
+                 th:field="*{newPictures}" multiple>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+
+      <div class="container-fluid mb-4">
+        <div class="card-columns" style="column-count: 5">
+          <div class="card" th:each="pict : ${product.pictures}">
+            <div class="card-header" >Picture</div>
+            <a th:href="@{/picture/{pictureId}(pictureId=${pict.id})}">
+              <img class="card-img-bottom" th:src="@{/picture/{pictureId}(pictureId=${pict.id})}"
+                   width="40%"/>
+            </a>
+            <a class="card-header" th:href="@{/picture/delete/{pictureId}(pictureId=${pict.id})}">Delete</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

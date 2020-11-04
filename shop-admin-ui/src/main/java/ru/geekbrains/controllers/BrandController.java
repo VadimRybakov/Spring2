@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.geekbrains.dto.BrandDto;
 import ru.geekbrains.model.Brand;
 import ru.geekbrains.services.BrandService;
 
@@ -61,7 +62,7 @@ public class BrandController {
 
   @GetMapping("/edit/{id}")
   public String editBrand(@PathVariable("id") int id, Model model) {
-    Brand brand = brandService.findById(id);
+    BrandDto brand = brandService.findById(id);
     model.addAttribute("brand", brand);
     return "brands_form";
   }
@@ -74,14 +75,13 @@ public class BrandController {
 
   @GetMapping("/edit/delete/{id}")
   public String deleteBrand(@PathVariable("id") int id) {
-    Brand brand = brandService.findById(id);
-    brandService.delete(brand);
+    brandService.deleteById(id);
     return "redirect:/brands";
   }
 
   @PostMapping("/edit/update")
-  public String updateBrand(Brand brand) {
-    brandService.update(brand);
+  public String updateBrand(BrandDto brandDto) {
+    brandService.update(brandDto);
     return "redirect:/brands";
   }
 }

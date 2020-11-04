@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.dto.CategoryDto;
 import ru.geekbrains.exceptions.NotFoundException;
 import ru.geekbrains.model.Category;
 import ru.geekbrains.repo.CategoryRepository;
@@ -24,22 +25,26 @@ public class CategoryService {
     return categoryRepository.findAll(pageRequest);
   }
 
-  public Category findById(int id) {
-    return categoryRepository.findById(id).orElseThrow(
+  public CategoryDto findById(int id) {
+    return categoryRepository.findById(id).map(CategoryDto::new).orElseThrow(
         NotFoundException::new);
   }
 
   @Transactional
-  public void delete(Category category) {
-    categoryRepository.delete(category);
-  }
-
-  @Transactional
-  public void update(Category category) {
+  public void update(CategoryDto categoryDto) {
+    Category category = new Category();
+    category.setId(categoryDto.getId());
+    category.setTitle(categoryDto.getTitle());
+    category.setProducts(categoryDto.getProducts());
     categoryRepository.saveAndFlush(category);
   }
 
   public List<Category> findAll() {
     return categoryRepository.findAll();
+  }
+
+  @Transactional
+  public void deleteById(int id) {
+    categoryRepository.deleteById(id);
   }
 }

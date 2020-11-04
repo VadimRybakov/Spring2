@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.geekbrains.dto.ProductDto;
 import ru.geekbrains.model.Product;
 import ru.geekbrains.services.BrandService;
 import ru.geekbrains.services.CategoryService;
@@ -80,7 +81,7 @@ public class ProductController {
 
   @GetMapping("/edit/{id}")
   public String editProduct(@PathVariable("id") int id, Model model) {
-    Product product = productService.findById(id);
+    ProductDto product = productService.findById(id);
     model.addAttribute("product", product);
     model.addAttribute("brands", brandService.findAll());
     model.addAttribute("categories", categoryService.findAll());
@@ -89,7 +90,7 @@ public class ProductController {
 
   @GetMapping("/edit/form")
   public String productForm(Model model) {
-    model.addAttribute("product", new Product());
+    model.addAttribute("product", new ProductDto());
     model.addAttribute("brands", brandService.findAll());
     model.addAttribute("categories", categoryService.findAll());
     return "products_form";
@@ -97,14 +98,13 @@ public class ProductController {
 
   @GetMapping("/edit/delete/{id}")
   public String deleteProduct(@PathVariable("id") int id) {
-    Product product = productService.findById(id);
-    productService.delete(product);
+    productService.deleteById(id);
     return "redirect:/products";
   }
 
   @PostMapping("/edit/update")
-  public String updateProduct(Product product) {
-    productService.update(product);
+  public String updateProduct(ProductDto productDto) {
+    productService.update(productDto);
     return "redirect:/products";
   }
 }

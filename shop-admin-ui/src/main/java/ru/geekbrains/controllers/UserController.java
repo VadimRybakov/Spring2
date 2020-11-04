@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.geekbrains.dto.UserDto;
 import ru.geekbrains.model.Role;
 import ru.geekbrains.model.User;
 import ru.geekbrains.services.RoleService;
@@ -51,7 +52,7 @@ public class UserController {
 
   @GetMapping("/users/edit/{id}")
   public String editUser(Model model, @PathVariable("id") int id) {
-    User user = userService.findById(id);
+    UserDto user = userService.findById(id);
     List<Role> roles = roleService.findAll();
     model.addAttribute("user", user);
     model.addAttribute("roles", roles);
@@ -65,21 +66,21 @@ public class UserController {
   }
 
   @PostMapping("/users/edit/update")
-  public String saveUser(@ModelAttribute(name = "user") User user, Model model) {
-    boolean passMismatch = user.getPassword().equals(user.getConfirmPassword());
+  public String saveUser(@ModelAttribute(name = "user") UserDto userDto, Model model) {
+    boolean passMismatch = userDto.getPassword().equals(userDto.getConfirmPassword());
     if (!passMismatch) {
       String pasMismatchErr = "passwordsNotMatchException";
       List<Role> roles = roleService.findAll();
       model.addAttribute("pasMismatchErr", pasMismatchErr);
-      model.addAttribute("user", user);
+      model.addAttribute("user", userDto);
       model.addAttribute("roles", roles);
       return "user";
     } else {
-      User existUser = userService.findByName(user.getName());
+      User existUser = userService.findByName(userDto.getUsername());
         if (existUser != null) {
             userService.deleteUser(existUser);
         }
-      userService.save(user);
+      userService.save(userDto);
     }
     return "redirect:/users";
   }
