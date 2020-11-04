@@ -1,7 +1,7 @@
 create table products
 (
     id          bigint       not null auto_increment,
-    title        varchar(255) not null,
+    title       varchar(255) not null,
     price       decimal,
     brand_id    bigint       not null,
     category_id bigint       not null,

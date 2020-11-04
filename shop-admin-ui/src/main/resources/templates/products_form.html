@@ -8,21 +8,21 @@
 <div th:replace="fragments/menu :: menu"></div>
 
 <div class="container">
-    <div class="row py-2">
-        <div class="col-12">
-            <form th:action="@{/products/edit/update}" method="post" th:object="${product}">
-                <div class="form-group">
-                    <label>Id</label>
-                    <input type="number" class="form-control" th:field="*{id}" placeholder="Enter id">
-                    <label>Title</label>
-                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title">
-                    <label>Cost</label>
-                    <input type="number" class="form-control" th:field="*{price}" placeholder="Enter price">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+  <div class="row py-2">
+    <div class="col-12">
+      <form th:action="@{/products/edit/update}" method="post" th:object="${product}">
+        <div class="form-group">
+          <label>Id</label>
+          <input type="number" class="form-control" th:field="*{id}" placeholder="Enter id">
+          <label>Title</label>
+          <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title">
+          <label>Cost</label>
+          <input type="number" class="form-control" th:field="*{price}" placeholder="Enter price">
         </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
+  </div>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>

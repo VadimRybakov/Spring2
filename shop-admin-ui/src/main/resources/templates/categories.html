@@ -27,8 +27,11 @@
           <th scope="row" th:text="${category.id}"></th>
           <td th:text="${category.title}">Title</td>
           <td sec:authorize="hasAnyRole('MANAGER', 'ADMIN')">
-            <a class="btn btn-success" th:href="@{/categories/edit/{id}(id = ${category.id})}"><i class="fas fa-edit"></i></a>
-            <a class="btn btn-danger" th:href="@{/categories/edit/delete/{id}(id = ${category.id})}"><i class="far fa-trash-alt"></i></a>
+            <a class="btn btn-success" th:href="@{/categories/edit/{id}(id = ${category.id})}"><i
+                class="fas fa-edit"></i></a>
+            <a class="btn btn-danger"
+               th:href="@{/categories/edit/delete/{id}(id = ${category.id})}"><i
+                class="far fa-trash-alt"></i></a>
           </td>
         </tr>
         </tbody>
@@ -46,7 +49,7 @@
         </li>
         <li th:each="num: ${#numbers.sequence(1, categories.totalPages)}"
             class="page-item" th:classappend="${num == categories.number + 1} ? 'active'">
-          <a class="page-link" th:text = "${num}"
+          <a class="page-link" th:text="${num}"
              th:href="@{categories(page=${num}, size=${categories.size})}"></a>
         </li>
         <li class="page-item">

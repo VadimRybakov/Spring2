@@ -1,4 +1,4 @@
-INSERT INTO `categories` (`title`)
+INSERT INTO ` categories ` (`title`)
 VALUES ('fruits'),
        ('vegetables');
 GO
