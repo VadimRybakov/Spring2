@@ -27,7 +27,7 @@
         <tbody>
         <tr th:each="user : ${users}">
           <th scope="row" th:text="${user.id}"></th>
-          <td th:text="${user.login}"></td>
+          <td th:text="${user.name}"></td>
           <td>
             <p th:each="role : ${user.roles}" th:text="${role.name}"></p>
           </td>

@@ -18,6 +18,14 @@
           <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title">
           <label>Cost</label>
           <input type="number" class="form-control" th:field="*{price}" placeholder="Enter price">
+          <label>Brand</label>
+          <select th:field="*{brand}" class="form-control">
+            <option th:each="b : ${brands}" th:text="${b.title}" th:value="${b.id}"/>
+          </select>
+          <label>Category</label>
+          <select th:field="*{category}" class="form-control">
+            <option th:each="c : ${categories}" th:text="${c.title}" th:value="${c.id}"/>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

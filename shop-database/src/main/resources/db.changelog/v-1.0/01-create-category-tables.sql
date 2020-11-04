@@ -1,6 +1,6 @@
 create table categories
 (
-    id    bigint       not null auto_increment,
+    id    int       not null auto_increment,
     title varchar(255) not null,
     primary key (id)
 ) engine=InnoDB;

@@ -10,7 +10,26 @@
 <div class="container">
   <div class="row py-2">
     <div class="col-12">
-      <a class="btn btn-primary" th:href="@{categories/form}">Add Category</a>
+      <a class="btn btn-primary" th:href="@{categories/edit/form}">Add Category</a>
+    </div>
+
+    <div class="col-12 mt-3">
+      <form th:action="@{/categories}" method="GET">
+        <div class="input-group">
+          <select class="form-control" name="sortBy" id="sortBy">
+            <option th:value="id">order by id</option>
+            <option th:value="title">order by title</option>
+          </select>
+          <select class="form-control" name="direction" id="direction">
+            <option th:value="ASK">asc direction</option>
+            <option th:value="DESC">desc direction</option>
+          </select>
+          <!--                    <input class="form-control" th:value="${param.sortBy}" name="sortBy" type="text"
+                                     placeholder="sort by" id="sortBy"/>-->
+        </div>
+        <br>
+        <button type="submit" class="btn btn-warning">Filter</button>
+      </form>
     </div>
 
     <div class="col-12">
@@ -45,18 +64,19 @@
           <a class="page-link"
              th:if="${categories.hasPrevious()}"
              th:href="@{categories(page=${categories.previousOrFirstPageable().getPageNumber() + 1},
-                       size=${categories.size})}" tabindex="-1">Previous</a>
+                       size=${categories.size}, sortBy=${sortBy}, direction=${direction})}"
+             tabindex="-1">Previous</a>
         </li>
         <li th:each="num: ${#numbers.sequence(1, categories.totalPages)}"
             class="page-item" th:classappend="${num == categories.number + 1} ? 'active'">
           <a class="page-link" th:text="${num}"
-             th:href="@{categories(page=${num}, size=${categories.size})}"></a>
+             th:href="@{categories(page=${num}, size=${categories.size}, sortBy=${sortBy}, direction=${direction})}"></a>
         </li>
         <li class="page-item">
           <a class="page-link"
              th:if="${categories.hasNext()}"
              th:href="@{categories(page=${categories.nextOrLastPageable().getPageNumber() + 1},
-                       size=${categories.size})}">Next</a>
+                       size=${categories.size}, sortBy=${sortBy}, direction=${direction})}">Next</a>
         </li>
       </ul>
     </nav>

@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row py-2">
     <div class="col-12">
-      <a class="btn btn-primary" th:href="@{products/form}">Add Product</a>
+      <a class="btn btn-primary" th:href="@{products/edit/form}">Add Product</a>
     </div>
 
     <div class="col-12 mt-3">
@@ -44,6 +44,8 @@
           <th scope="col">Id</th>
           <th scope="col">Title</th>
           <th scope="col">Price</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Category</th>
           <th sec:authorize="hasAnyRole('MANAGER', 'ADMIN', 'SUPERADMIN')" scope="col">Actions</th>
         </tr>
         </thead>
@@ -52,6 +54,8 @@
           <th scope="row" th:text="${product.id}"></th>
           <td th:text="${product.title}">Title</td>
           <td th:text="${product.price}">Price</td>
+          <td th:text="${product.brand.title}">Brand</td>
+          <td th:text="${product.category.title}">Category</td>
           <td sec:authorize="hasAnyRole('MANAGER', 'ADMIN')">
             <a class="btn btn-success" th:href="@{/products/edit/{id}(id = ${product.id})}"><i
                 class="fas fa-edit"></i></a>
