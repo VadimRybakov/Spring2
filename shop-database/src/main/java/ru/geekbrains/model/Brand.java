@@ -3,7 +3,11 @@ package ru.geekbrains.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "brands")
 public class Brand implements Serializable {
