@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: header"></head>
+
+<body>
+
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+  <div class="row py-2">
+    <div class="col-12">
+      <a sec:authorize="hasRole('SUPERADMIN')" class="btn btn-primary" th:href="@{/users/edit}">Add
+        User</a>
+    </div>
+
+    <div class="col-12">
+      <table class="table table-bordered my-2">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Login</th>
+          <th scope="col">Roles</th>
+          <th sec:authorize="hasRole('SUPERADMIN')" scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+          <th scope="row" th:text="${user.id}"></th>
+          <td th:text="${user.login}"></td>
+          <td>
+            <p th:each="role : ${user.roles}" th:text="${role.name}"></p>
+          </td>
+          <td sec:authorize="hasRole('SUPERADMIN')">
+            <a class="btn btn-success" th:href="@{/users/edit/{id}(id = ${user.id})}"><i
+                class="fas fa-edit"></i></a>
+            <a class="btn btn-danger" th:href="@{/users/edit/delete/{id}(id = ${user.id})}"><i
+                class="far fa-trash-alt"></i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

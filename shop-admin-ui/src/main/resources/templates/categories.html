@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: header"></head>
+
+<body>
+
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+  <div class="row py-2">
+    <div class="col-12">
+      <a class="btn btn-primary" th:href="@{categories/form}">Add Category</a>
+    </div>
+
+    <div class="col-12">
+      <table class="table table-bordered my-2">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Title</th>
+          <th sec:authorize="hasAnyRole('MANAGER', 'ADMIN', 'SUPERADMIN')" scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories.content}">
+          <th scope="row" th:text="${category.id}"></th>
+          <td th:text="${category.title}">Title</td>
+          <td sec:authorize="hasAnyRole('MANAGER', 'ADMIN')">
+            <a class="btn btn-success" th:href="@{/categories/edit/{id}(id = ${category.id})}"><i
+                class="fas fa-edit"></i></a>
+            <a class="btn btn-danger"
+               th:href="@{/categories/edit/delete/{id}(id = ${category.id})}"><i
+                class="far fa-trash-alt"></i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-12">
+    <nav aria-label="...">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link"
+             th:if="${categories.hasPrevious()}"
+             th:href="@{categories(page=${categories.previousOrFirstPageable().getPageNumber() + 1},
+                       size=${categories.size})}" tabindex="-1">Previous</a>
+        </li>
+        <li th:each="num: ${#numbers.sequence(1, categories.totalPages)}"
+            class="page-item" th:classappend="${num == categories.number + 1} ? 'active'">
+          <a class="page-link" th:text="${num}"
+             th:href="@{categories(page=${num}, size=${categories.size})}"></a>
+        </li>
+        <li class="page-item">
+          <a class="page-link"
+             th:if="${categories.hasNext()}"
+             th:href="@{categories(page=${categories.nextOrLastPageable().getPageNumber() + 1},
+                       size=${categories.size})}">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
