@@ -39,10 +39,4 @@ public class PictureController {
     }
   }
 
-  @GetMapping("/delete/{pictureId}")
-  public String deletePicture(@PathVariable("pictureId") Integer pictureId) {
-    pictureService.deletePictureById(pictureId);
-    return "redirect:/products";
-  }
-
 }

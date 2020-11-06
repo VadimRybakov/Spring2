@@ -5,24 +5,33 @@
 
 <body>
 
-<div th:replace="fragments/menu :: menu"></div>
-
 <div class="container">
   <div class="row py-2">
     <div class="col-12">
-      <form th:action="@{/categories/edit/update}" method="post" th:object="${category}">
-        <div class="form-group">
-          <label>Id</label>
-          <input type="number" class="form-control" th:field="*{id}" placeholder="Enter id">
-          <label>Title</label>
-          <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+      <label>Title</label>
+      <div th:text="${product.title}"></div>
+      <label>Cost</label>
+      <div th:text="${product.price}"></div>
+      <label>Brand</label>
+      <div th:text="${product.brand.title}"></div>
+      <label>Category</label>
+      <div th:text="${product.category.title}"></div>
     </div>
+    <div class="container-fluid mb-4">
+      <div class="card-columns" style="column-count: 5">
+        <div class="card" th:each="pict : ${product.pictures}">
+          <div class="card-header">Picture</div>
+          <a th:href="@{/picture/{pictureId}(pictureId=${pict.id})}">
+            <img class="card-img-bottom" th:src="@{/picture/{pictureId}(pictureId=${pict.id})}"
+                 width="40%"/>
+          </a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
-
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -34,5 +43,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
 </body>
+</html>
