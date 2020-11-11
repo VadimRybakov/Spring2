@@ -23,7 +23,9 @@ public class FoodMarketService {
         .collect(Collectors.toList());
   }
 
-  public Object findOneById(Integer id) {
-    return productRepository.findOneById(id).orElse(null);
+  public ProductDto findOneById(Integer id) {
+    return productRepository.findOneById(id)
+        .map(ProductDto::new)
+        .orElseThrow(IllegalArgumentException::new);
   }
 }

@@ -19,16 +19,11 @@
     </div>
     <div class="container-fluid mb-4">
       <div class="card-columns" style="column-count: 5">
-        <div class="card" th:each="pict : ${product.pictures}">
-          <div class="card-header">Picture</div>
-          <a th:href="@{/picture/{pictureId}(pictureId=${pict.id})}">
-            <img class="card-img-bottom" th:src="@{/picture/{pictureId}(pictureId=${pict.id})}"
-                 width="40%"/>
-          </a>
-        </div>
+        <div class="card-header">Picture</div>
+        <img th:src="@{/picture/{pictureId}(pictureId=${product.pictureIds.get(0)})}" alt=""
+             width="40%"/>
       </div>
     </div>
-
   </div>
 </div>
 </div>

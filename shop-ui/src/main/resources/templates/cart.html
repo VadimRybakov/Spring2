@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: head"></head><!--/head-->
+
+<body>
+
+<header id="header" th:replace="fragments/header :: header"></header><!--header-->
+
+<section id="cart_items">
+  <div class="container">
+    <div class="breadcrumbs">
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">Shopping Cart</li>
+      </ol>
+    </div>
+    <div class="table-responsive cart_info">
+      <table class="table table-condensed">
+        <thead>
+        <tr class="cart_menu">
+          <td class="image">Item</td>
+          <td class="description"></td>
+          <td class="price">Price</td>
+          <td class="quantity">Quantity</td>
+          <td class="total">Total</td>
+          <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sessionData : ${sessionDatas}">
+          <td class="cart_product">
+            <a href="">
+              <img
+                  th:src="@{/picture/{pictureId}(pictureId=${sessionData.productDto.pictureIds.get(0)})}"
+                  alt=""/>
+            </a>
+          </td>
+          <td class="cart_description">
+            <h4><a href="" th:text="${sessionData.productDto.title}">Colorblock Scuba</a></h4>
+            <p>Web ID: [[${sessionData.productDto.id}]]</p>
+          </td>
+          <td class="cart_price">
+            <p>$[[${sessionData.productDto.price}]]</p>
+          </td>
+          <td class="cart_quantity">
+            <div class="cart_quantity_button">
+              <a class="cart_quantity_up" href=""> + </a>
+              <input class="cart_quantity_input" type="text" name="quantity"
+                     th:value="${sessionData.qty}" autocomplete="off" size="2">
+              <a class="cart_quantity_down" href=""> - </a>
+            </div>
+          </td>
+          <td class="cart_total">
+            <p class="cart_total_price">$[[${sessionData.total}]]</p>
+          </td>
+          <td class="cart_delete">
+            <form th:action="@{/cart/delete}" th:method="post">
+              <input type="hidden" name="productId" th:value="${sessionData.productId}"/>
+              <button type="submit" class="cart_quantity_delete">
+                <i class="fa fa-times"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
