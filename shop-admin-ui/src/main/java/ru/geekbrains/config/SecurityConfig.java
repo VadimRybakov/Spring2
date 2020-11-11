@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.geekbrains.lesson6_spring_boot.services.UserService;
+import ru.geekbrains.services.UserService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-        .antMatchers("/users").hasAnyRole("ADMIN", "SUPERADMIN")
+        .antMatchers("/users", "/picture").hasAnyRole("ADMIN", "SUPERADMIN")
         .antMatchers("/users/edit").hasRole("SUPERADMIN")
         .antMatchers("/brands/edit/**", "/categories/edit**", "/products/edit/**")
         .hasAnyRole("MANAGER", "ADMIN", "SUPERADMIN")
@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .loginProcessingUrl("/authenticateTheUser")
         .and()
         .logout()
-        .logoutSuccessUrl("/")
+        .logoutSuccessUrl("/products")
         .permitAll();
   }
 

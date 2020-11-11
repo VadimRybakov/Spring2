@@ -1,6 +1,6 @@
 create table roles
 (
-    id   bigint       not null auto_increment,
+    id   int       not null auto_increment,
     name varchar(255) not null,
     primary key (id)
 ) engine=InnoDB;
@@ -8,7 +8,7 @@ GO
 
 create table users
 (
-    id         bigint       not null auto_increment,
+    id         int       not null auto_increment,
     age        integer,
     email      varchar(255),
     name       varchar(32)  not null,
@@ -21,8 +21,8 @@ GO
 
 create table users_roles
 (
-    user_id bigint not null,
-    role_id bigint not null,
+    user_id int not null,
+    role_id int not null,
     primary key (user_id, role_id)
 ) engine=InnoDB;
 GO

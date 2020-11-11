@@ -121,7 +121,7 @@ if [ -z "$JAVA_HOME" ]; then
   if [ -n "$javaExecutable" ] && ! [ "`expr \"$javaExecutable\" : '\([^ ]*\)'`" = "no" ]; then
     # readlink(1) is not available as standard on Solaris 10.
     readLink=`which readlink`
-    if [ ! `expr "$readLink" : '\([^ ]*\)'` = "no" ]; then
+    if [ !`expr "$readLink" : '\([^ ]*\)'`= "no" ]; then
       if $darwin ; then
         javaHome="`dirname \"$javaExecutable\"`"
         javaExecutable="`cd \"$javaHome\" && pwd -P`/javac"
