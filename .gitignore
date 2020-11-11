@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/shop-picture-service/src/main/resources/static/
