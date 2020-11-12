@@ -1,5 +1,6 @@
 package ru.geekbrains.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -39,6 +40,7 @@ public class Picture implements Serializable {
   @JoinColumn(name = "picture_data_id")
   private PictureData pictureData;
 
+  @JsonIgnore
   @ManyToMany(mappedBy = "pictures")
   private List<Product> products;
 
