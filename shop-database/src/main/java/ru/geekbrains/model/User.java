@@ -1,5 +1,6 @@
 package ru.geekbrains.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +37,7 @@ public class User {
   @Transient
   private String confirmPassword;
 
+  @JsonIgnore
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "users_roles",
       joinColumns = @JoinColumn(name = "user_id"),

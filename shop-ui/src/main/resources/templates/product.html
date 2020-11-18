@@ -19,19 +19,20 @@
     </div>
     <div class="container-fluid mb-4">
       <div class="card-columns" style="column-count: 5">
-        <div class="card" th:each="pict : ${product.pictures}">
-          <div class="card-header">Picture</div>
-          <a th:href="@{/picture/{pictureId}(pictureId=${pict.id})}">
-            <img class="card-img-bottom" th:src="@{/picture/{pictureId}(pictureId=${pict.id})}"
-                 width="40%"/>
-          </a>
-        </div>
+        <div class="card-header">Picture</div>
+        <img th:src="@{/picture/{pictureId}(pictureId=${product.pictureIds.get(0)})}" alt=""
+             width="40%"/>
       </div>
     </div>
-
   </div>
 </div>
 </div>
+
+
+<div th:include="fragments/chat :: chat"/>
+<script th:src="@{/webjars/sockjs-client/1.0.2/sockjs.min.js}"></script>
+<script th:src="@{/webjars/stomp-websocket/2.3.3/stomp.min.js}"></script>
+<script th:src="@{/js/chat.js}"></script>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

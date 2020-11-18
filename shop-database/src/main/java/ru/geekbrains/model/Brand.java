@@ -1,5 +1,6 @@
 package ru.geekbrains.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -28,6 +29,7 @@ public class Brand implements Serializable {
   @Column(name = "title", unique = true, nullable = false)
   private String title;
 
+  @JsonIgnore
   @OneToMany(
       mappedBy = "brand",
       cascade = CascadeType.ALL)
