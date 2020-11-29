@@ -20,11 +20,16 @@
     <module>shop-admin-ui</module>
     <module>shop-ui</module>
     <module>shop-picture-service</module>
+    <module>spring-cloud-config</module>
+    <module>spring-eureka</module>
+    <module>shop-ui-cloud</module>
+    <module>spring-gateway</module>
   </modules>
 
   <properties>
     <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
   </properties>
 
   <dependencies>
@@ -36,6 +41,19 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
 
 
 </project>
