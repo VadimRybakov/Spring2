@@ -24,6 +24,7 @@
     <module>spring-eureka</module>
     <module>shop-ui-cloud</module>
     <module>spring-gateway</module>
+    <module>rabbit-mq-sender</module>
   </modules>
 
   <properties>
