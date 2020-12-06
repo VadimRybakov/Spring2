@@ -1,6 +1,7 @@
 package ru.geekbrains.springintegration.config;
 
 import java.io.File;
+import javax.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,10 @@ import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.file.FileReadingMessageSource;
 import org.springframework.integration.file.FileWritingMessageHandler;
 import org.springframework.integration.file.transformer.FileToStringTransformer;
+import org.springframework.integration.jpa.dsl.Jpa;
+import org.springframework.integration.jpa.support.PersistMode;
 import org.springframework.messaging.MessageHandler;
+import ru.geekbrains.model.Brand;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,7 +30,7 @@ public class ImportConfiguration {
   @Value("${dest.directory.path}")
   private String destDirectoryPath;
 
-//  private final EntityManagerFactory entityManagerFactory;
+  private final EntityManagerFactory entityManagerFactory;
 
   @Bean
   public MessageSource<File> sourceDirectory() {
@@ -50,16 +54,13 @@ public class ImportConfiguration {
         conf -> conf.poller(Pollers.fixedDelay(2000)))
         .filter(msg -> ((File) msg).getName().endsWith(".txt"))
         .transform(new FileToStringTransformer())
-        .<String, String>transform(String::toUpperCase)
-        .handle(destDirectory())
+        .split(s -> s.delimiters("\n"))
+        .<String, Brand>transform(str -> Brand.builder().title(str).build())
+        .handle(Jpa.outboundAdapter(entityManagerFactory)
+                .entityClass(Brand.class)
+                .persistMode(PersistMode.PERSIST),
+            e -> e.transactional(true))
         .get();
   }
-
-/*  @Bean
-  public JpaUpdatingOutboundEndpointSpec jpaPersistHandler() {
-    return Jpa.outboundAdapter(this.entityManagerFactory)
-        .entityClass(Brand.class)
-        .persistMode(PersistMode.PERSIST);
-  }*/
 
 }
