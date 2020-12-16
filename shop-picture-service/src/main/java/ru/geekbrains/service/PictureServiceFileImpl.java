@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import ru.geekbrains.model.Picture;
@@ -48,8 +47,7 @@ public class PictureServiceFileImpl implements PictureService {
   }
 
   @Override
-  public PictureData createPictureData(byte[] picture) {
-    String fileName = UUID.randomUUID().toString();
+  public PictureData createPictureData(byte[] picture, String fileName) {
     try (OutputStream outputStream = Files.newOutputStream(Path.of(storagePath, fileName))) {
       outputStream.write(picture);
     } catch (IOException ex) {
