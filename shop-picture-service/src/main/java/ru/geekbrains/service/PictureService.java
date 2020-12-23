@@ -11,7 +11,7 @@ public interface PictureService {
 
   Optional<byte[]> getPictureDataById(int id);
 
-  PictureData createPictureData(byte[] picture);
+  PictureData createPictureData(byte[] picture, String fileName);
 
   void deletePictureById(Integer pictureId);
 }

@@ -62,7 +62,8 @@ public class ProductService {
         product.getPictures().add(new Picture(
             newPicture.getOriginalFilename(),
             newPicture.getContentType(),
-            pictureService.createPictureData(newPicture.getBytes())));
+            pictureService.createPictureData(newPicture.getBytes(),
+                newPicture.getOriginalFilename())));
       }
     }
     productRepository.save(product);

@@ -30,7 +30,7 @@ public class PictureServiceBlobImpl implements PictureService {
   }
 
   @Override
-  public PictureData createPictureData(byte[] picture) {
+  public PictureData createPictureData(byte[] picture, String fileName) {
     return new PictureData(picture);
   }
 
